@@ -1,0 +1,22 @@
+artifacts_root: artifacts
+
+
+data_ingestion:
+  root_dir: artifacts/data_ingestion
+  source_URL: https://www.kaggle.com/datasets/uciml/sms-spam-collection-dataset/download?datasetVersionNumber=1
+  local_data_file: artifacts/data_ingestion/data.zip
+  unzip_dir: artifacts/data_ingestion/data
+
+
+
+preprocessor:
+  data_dir: artifacts/data_ingestion/data/spam.csv
+  root_dir: artifacts/preprocessor
+  vect_obj_dir: artifacts/preprocessor/vect_obj.pkl
+  tfidf_obj_dir: artifacts/preprocessor/tfidf_obj.pkl
+  label_encoder_dir: artifacts/preprocessor/label_encoder.pkl
+
+
+training:
+  root_dir: artifacts/training
+  trained_model_path: artifacts/training/model.joblib
