@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 __version__ = "0.0.0"
 
-REPO_NAME = "sms_span_detection"
+REPO_NAME = "sms_spam_detection"
 AUTHOR_USER_NAME = "gautamjain1503"
 SRC_REPO = "sms_spam_detection"
 AUTHOR_EMAIL = "gautamjain.15032004@gmail.com"
@@ -17,7 +17,7 @@ setuptools.setup(
     version=__version__,
     author=AUTHOR_USER_NAME,
     author_email=AUTHOR_EMAIL,
-    description="A python project for bird classification app",
+    description="A python project for sms_spam_detection app",
     long_description=long_description,
     long_description_content="text/markdown",
     url=f"https://github.com/{AUTHOR_USER_NAME}/{REPO_NAME}",
