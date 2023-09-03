@@ -12,10 +12,11 @@ class Predict:
     def main(self, message):
         config = ConfigurationManager()
         preprocessor_config = config.get_preprocesser_config()
-        model_path=Path("artifacts/training/model.joblib")
+        model_path=Path("artifacts/training/model.pkl")
         model = PredictPipeline(config=preprocessor_config, model_path=model_path)
-        result=model.predict(message=message)
+        result=model.predict_spam(message=message)
         logger.info(f">>>>>>  {result}  <<<<<<\n\nx==========x")
+        return result
 
 
 

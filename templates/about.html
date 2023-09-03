@@ -47,36 +47,19 @@
         </div>
       </div>
     </nav>
-    <div >
-      <div class="p-3 mb-2 mt-4 mx-auto">
-        <form action="/" method="POST">
+    <div class="container bg-secondary text-white rounded border border-4 border-danger pt-2 mt-4">
+        <p>
+        <h3>This is SPAM SMS DETECTION which helps you to identify the spam messages.</h3>
+        <br>
+        <h5>Build an AI model that can classify SMS messages as spam or legitimate. Use techniques like TF-IDF or word embeddings with classifiers like Naive Bayes, Logistic Regression, or Support Vector Machines to identify spam messages</h5>
+        <br>
+        <h3>Acknowledgements</h3>
+        <br>
+        <h5>The original dataset can be found here. The creators would like to note that in case you find the dataset useful, please make a reference to previous paper and the web page: <a href="http://www.dt.fee.unicamp.br/~tiago/smsspamcollection/" style="color: aqua;">http://www.dt.fee.unicamp.br/~tiago/smsspamcollection/</a> in your papers, research, etc. </h5>
+        <h5>We offer a comprehensive study of this corpus in the following paper. This work presents a number of statistics, studies and baseline results for several machine learning methods. </h5>
+        <h5>Almeida, T.A., GÃ³mez Hidalgo, J.M., Yamakami, A. Contributions to the Study of SMS Spam Filtering: New Collection and Results. Proceedings of the 2011 ACM Symposium on Document Engineering (DOCENG'11), Mountain View, CA, USA, 2011.</h5>
+        </p>
 
-          <div class="form-floating text-white">
-            <textarea class="form-control bg-secondary text-white"  id="Message" name="Message" style="height: 200px"></textarea>
-            <label for="Message">SMS Message</label>
-          </div>
-          <div>
-            <button type="submit" class="btn btn-primary p-3 mt-4" style="width: 150px; font-size: large;">Check</button>
-          </div>
-        </form>
-      </div>
-      {% if result=="ham" %}
-      <div class="container mt-4 bg-success bg-gradient text-white ">
-        <h4>{{message}}</h4>
-        <h2 class="text-center">
-          HAM
-        </h2>
-      </div>
-      {% endif %}
-      {% if result=="spam" %}
-      <div class="container mt-4 bg-danger bg-gradient text-white">
-        <p>{{message}}</p>
-        <br class="bg-dark">
-        <h2 class="text-center">
-          SPAM
-        </h2>
-      </div>
-      {% endif %}
     </div>
     
   </body>

@@ -8,21 +8,22 @@ class PredictPipeline:
     def __init__(self,config: DataPreprocesserConfig, model_path: Path):
         self.data_transformation_config=config
         self.model_path=model_path
+        self.preprocessor_vect=load_bin(self.data_transformation_config.vect_obj_dir)
+        self.preprocessor_tfidf=load_bin(self.data_transformation_config.tfidf_obj_dir)
+        self.ld=load_bin(self.data_transformation_config.label_encoder)
 
-    def predict(self,message):
+    def predict_spam(self,message):
         data=CustomData(message)
         df=data.get_data_as_data_frame()
         data_tranformer=DataTransformation(config=self.data_transformation_config)
         df['processed_message'] = df['sms_message'].apply(data_tranformer.preprocess_data)
-        preprocessor_vect=load_bin(self.data_transformation_config.vect_obj_dir)
-        preprocessor_tfidf=load_bin(self.data_transformation_config.tfidf_obj_dir)
-        df.drop("sms_message", axis=1)
-        df=preprocessor_vect.transform(df)
-        df=preprocessor_tfidf.transform(df)
+        df.drop("sms_message", axis=1, inplace=True)
+        df=self.preprocessor_vect.transform(df)
+        df=self.preprocessor_tfidf.transform(df)
+        print(type(df))
         model=load_bin(self.model_path)
         result=model.predict(df)
-        ld=load_bin(self.data_transformation_config.label_encoder)
-        result=ld.inverse_transform(result)
+        result=self.ld.inverse_transform(result)
         return result[0]
 
 

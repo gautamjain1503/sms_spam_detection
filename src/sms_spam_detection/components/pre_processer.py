@@ -61,7 +61,7 @@ class DataTransformation:
         df = pd.read_csv(self.data_transformation_config.data_dir, encoding="latin-1")
         df.dropna(axis=1, inplace=True)
         df.columns = ['target', 'sms_message']
-        train_df,test_df,_,_=train_test_split(df,df.target, random_state=42, test_size=0.2)
+        train_df,test_df,_,_=train_test_split(df,df.target, random_state=42)
         preprocessor_vect, preprocessor_tfidf=self.get_data_transformer_object()
 
         train_df['processed_message'] = train_df['sms_message'].apply(self.preprocess_data)

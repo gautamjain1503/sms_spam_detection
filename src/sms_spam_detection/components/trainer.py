@@ -11,40 +11,12 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score
 class ModelTrainer:
     def __init__(self, config:TrainingConfig):
         self.trainer_config=config
-        
-    def evaluate_models(self, X_train, y_train,X_test,y_test,models,param):
-        report = {}
-
-        for i in range(len(list(models))):
-            model = list(models.values())[i]
-            para=param[list(models.keys())[i]]
-
-            gs = GridSearchCV(model,para,cv=3)
-            gs.fit(X_train,y_train)
-
-            model.set_params(**gs.best_params_)
-            model.fit(X_train,y_train)
-
-            y_train_pred = model.predict(X_train)
-
-            y_test_pred = model.predict(X_test)
-
-            train_model_score = r2_score(y_train, y_train_pred)
-
-            test_model_score = r2_score(y_test, y_test_pred)
-
-            report[list(models.keys())[i]] = test_model_score
-
-        return report
-
-
-    def initiate_model_trainer(self,X_train,y_train,X_test,y_test):
-        models = {
+        self.models = {
             "Naive Bayes": MultinomialNB(),
             "Logistic Regression": LogisticRegression(),
             "Support Vector Machines": SVC()
         }
-        params={
+        self.params={
             "Naive Bayes": {
                 "alpha": [0.1,0.3, 0.6, 1.0]
             },
@@ -58,16 +30,44 @@ class ModelTrainer:
                 'kernel': ['rbf']
             }
         }
+        
+    def evaluate_models(self, X_train, y_train,X_test,y_test):
+        report = {}
 
-        model_report:dict=self.evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,
-                                            models=models,param=params)
+        for i in range(len(list(self.models))):
+            model = list(self.models.values())[i]
+            para=self.params[list(self.models.keys())[i]]
+
+            gs = GridSearchCV(model,para,cv=3)
+            gs.fit(X_train,y_train)
+
+            model.set_params(**gs.best_params_)
+            model.fit(X_train,y_train)
+            self.models[list(self.models.keys())[i]]=model
+
+            y_train_pred = model.predict(X_train)
+
+            y_test_pred = model.predict(X_test)
+
+            train_model_score = r2_score(y_train, y_train_pred)
+
+            test_model_score = r2_score(y_test, y_test_pred)
+
+            report[list(self.models.keys())[i]] = test_model_score
+
+        return report
+
+
+    def initiate_model_trainer(self,X_train,y_train,X_test,y_test):
+
+        model_report:dict=self.evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test)
         
         best_model_score = max(sorted(model_report.values()))
 
         best_model_name = list(model_report.keys())[
             list(model_report.values()).index(best_model_score)
         ]
-        best_model = models[best_model_name]
+        best_model = self.models[best_model_name]
 
         save_bin(
             path=self.trainer_config.trained_model_path,

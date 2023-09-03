@@ -19,4 +19,4 @@ preprocessor:
 
 training:
   root_dir: artifacts/training
-  trained_model_path: artifacts/training/model.joblib
+  trained_model_path: artifacts/training/model.pkl
